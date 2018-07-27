@@ -1,0 +1,16 @@
+.DS_Store
+
+npm-debug.log
+yarn-error.log
+
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+.idea
+.vs
+.vscode
+
+log/
+node_modules/

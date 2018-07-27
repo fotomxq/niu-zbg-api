@@ -1,0 +1,18 @@
+{
+  "name": "niu-zbg-api",
+  "description": "ZBG量化交易程序",
+  "version": "1.0.0",
+  "author": "fotomxq <fotomxq@qq.com>",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "run": "node main.js"
+  },
+  "dependencies": {
+    "crypto": "^1.0.1",
+    "fs": "^0.0.1-security",
+    "node-fetch": "^2.2.0",
+    "query-string": "^6.1.0",
+    "whatwg-fetch": "^2.0.4"
+  }
+}

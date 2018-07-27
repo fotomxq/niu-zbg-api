@@ -1,0 +1,11 @@
+{
+  "AccessKey": "",
+  "SecretKey": "",
+  "marketName": "eth_usdt",
+  "waitTime": 5000,
+  "fixNumber": 2,
+  "transactionsNumber": 0.5,
+  "waitFinishTime": 20000,
+  "showCoreLog": false,
+  "forceStopP": 0.1
+}
