@@ -421,10 +421,13 @@ let firstUserFund = -1;
 let limitMin = 0;
 let limitMax = 0;
 
-//清理委托
-let ClearEntrust = async function(){
-    //考虑到无法使用API，直接跳过该不步骤
-    return true;
+/**
+ * 清理所有委托
+ *  获取委托列表，并撤销所有委托
+ * @returns {Promise<boolean>}
+ * @constructor
+ */
+let ClearAllEntrust = async function(){
     //从UserFundData['list']中，根据webid找到交易对
     let fundIsOk = false;
     let thisFund = 0;
@@ -595,12 +598,36 @@ let CheckFinish = async function(){
     return true;
 };
 
+/**
+ * 撤销指定订单
+ * @param entrustId 订单ID
+ * @returns {Promise<*>}
+ * @constructor
+ */
+let ClearEntrust = async function(entrustId){
+    return await PostData('post','https://api.zbg.com/exchange/entrust/controller/website/EntrustController/cancelEntrust',{
+        'entrustId' : entrustId,
+        'marketId' : MarketNow['marketId']
+    },'json').then(res => {
+        if(!res || res['resMsg']['code'] < 1){
+            SendLog('无法撤销订单，请检查网络环境或API是否正常, 请手动操作...订单ID: ' + entrustId);
+            return false;
+        }
+        //console.log(res);
+        //SendLog('尝试撤销订单，订单ID: ' + entrustId);
+        return true;
+    });
+};
+
 //执行脚本主体部分
 let Run = function(){
     //获取市场数据
     buyAndSellMedian = [];
     const promise = new Promise((resolve, reject) =>{
-        resolve(true);
+        //间隔500毫秒执行1次动作
+        setTimeout(() => {
+            resolve(true);
+        },500);
     });
     promise.then(res =>{
         return GetMarket();
@@ -616,8 +643,10 @@ let Run = function(){
         if (!res) {
             return false;
         }
+        //考虑到无法使用API，直接跳过该不步骤
+        return true;
         //清理当前委托
-        return ClearEntrust();
+        return ClearAllEntrust();
     }).then(res => {
         if(!res){
             return false;
@@ -634,9 +663,37 @@ let Run = function(){
         if(!res){
             return false;
         }
-        //执行检查程序
-        waitFinishTime = ConfigData.waitFinishTime;
-        return CheckFinish();
+        //延迟等待后，清理列队所有订单，如果未成交，说明已经失败，不需要继续等待
+        const promiseFinish = new Promise((resolveFinish, rejectFinish) =>{
+            //间隔500毫秒执行1次动作
+            setTimeout(() => {
+                resolveFinish(true);
+            },3000);
+        });
+        promiseFinish.then(res => {
+            if(!res){
+                return false;
+            }
+            for(let key in nowEntrustList){
+                let val = nowEntrustList[key];
+                if(!val){
+                    continue;
+                }
+                if(!ClearEntrust(val)){
+                    return false;
+                }
+                SendLog('尝试等待后，撤销订单，无论成功或失败。该问题主要是官方API，无法查询委托订单，所以只能强制执行撤销。确保N秒后没有遗留订单。');
+            }
+            return true;
+        }).then(res => {
+            if(!res){
+                return false;
+            }
+            //执行检查程序
+            waitFinishTime = ConfigData.waitFinishTime;
+            return CheckFinish();
+        });
+        return true;
     });
 };
 
