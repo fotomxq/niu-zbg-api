@@ -75,6 +75,7 @@ let GetDateToFormat = function(date,format){
 
 /**
  * 发送日志
+ *  同时将保存到文件
  * @param message 消息
  * @param isCore 是否核心日志，默认不是
  * @constructor
@@ -107,8 +108,16 @@ let SendLog = function(message,isCore){
     });
 };
 
-//修改总记录的累计数量
-// 叠加数据
+/**
+ * 修改总记录的累计数量
+ * 叠加数据
+ * @param totalNum 执行次数
+ * @param totalBuy 总买入金额
+ * @param buyUnit 买入次数
+ * @param totalSell 总卖出金额
+ * @param sellUnit 卖出次数
+ * @constructor
+ */
 let SaveTotalConfig = function(totalNum,totalBuy,buyUnit,totalSell,sellUnit){
     //打开文件并解析
     let src = './config.json';
@@ -154,7 +163,7 @@ let SaveTotalConfig = function(totalNum,totalBuy,buyUnit,totalSell,sellUnit){
 /**
  * 通讯基础模块
  * 自动合并构建前置参数，并post提交数据
- * @param {*} postType post/get
+ * @param {*} postType 请求方式post/get
  * @param {*} url URL
  * @param {*} params 请求参数
  * @param {*} paramType 参数类型，formdata / json
@@ -255,10 +264,13 @@ let GetDataNoSign = async function(url){
 //用户资金数据
 let UserFundData = {};
 
-//获取用户资金数据
+/**
+ * 获取用户资金数据
+ *  完成后，调用UserFundData即可查询数据
+ * @returns {Promise<*>}
+ * @constructor
+ */
 let GetUserFund = async function(){
-    //考虑到无法使用API，直接跳过该不步骤
-    return true;
     //尝试获取用户个人交易数据，测试是否正常？
     return await PostData('post','https://api.zbg.com/exchange/fund/controller/website/fundcontroller/findbypage',{
         "pageSize":200,
@@ -275,7 +287,11 @@ let GetUserFund = async function(){
     });
 };
 
-//测试模块
+/**
+ * 测试模块
+ * 成功后testOK为true
+ * @type {boolean}
+ */
 let testOK = false;
 let TestMode = async function(){
     let testPersonnelData = await async function(){
@@ -318,6 +334,7 @@ let buyAndSellMedian = 0;
 
 /**
  * 获取市场及市场行情
+ *  完成后MarketList为存在数据的数组结构
  * @returns {Promise<boolean>}
  * @constructor
  */
@@ -500,7 +517,13 @@ let runNumber = 0;
 let runBuyTotal = 0;
 let runSellTotal = 0;
 
-//检查交易是否成功
+/**
+ * 检查交易是否成功
+ *  将检查nowEntrustList列队所有订单完成状态
+ *  全部完成后将调用下一次任务
+ * @returns {Promise<boolean>}
+ * @constructor
+ */
 let CheckFinish = async function(){
     //考虑到无法使用API，直接跳过该不步骤
     nowEntrustList = [];
@@ -585,6 +608,8 @@ let Run = function(){
         if (!res) {
             return false;
         }
+        //考虑到无法使用API，直接跳过该不步骤
+        return true;
         //获取用户资金数据
         return GetUserFund();
     }).then(res => {
