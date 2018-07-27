@@ -3,7 +3,7 @@
   "description": "ZBG量化交易程序",
   "version": "1.0.0",
   "author": "fotomxq <fotomxq@qq.com>",
-  "license": "MIT",
+  "license": "Apache",
   "private": true,
   "scripts": {
     "run": "node main.js"

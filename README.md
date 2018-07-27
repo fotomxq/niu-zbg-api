@@ -5,6 +5,26 @@
 
 如果您有其他用途，可以修改Run中买入、卖出部分。
 
+# 安装
+
+1、下载node.js，并安装
+
+2、下载yarn，并安装
+
+3、进入项目根目录，执行yarn，自动安装所需的库。或者您可以手动打开package.json文件，查看并安装所需库。
+
+    # 项目需配置
+    # 加密库
+    yarn add crypto
+    # 文件操作
+    yarn add fs
+    # fetch通讯
+    yarn add node-fetch
+    # formdata结构生成
+    yarn add query-string
+
+4、打开run.bat，或执行main.js即可。
+
 # 修改配置
 进入根目录下的config-data.json文件，找到配置信息修改即可。
 
