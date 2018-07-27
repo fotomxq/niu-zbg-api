@@ -57,19 +57,19 @@
 # 方法介绍
 参数详细说明，请参考代码注释。这里诺列全部方法，方便您参考和使用。
 
-  GetDateToFormat(date,format) 根据date时间获取特定结构的时间字符串
-  SendLog(message,isCore) 发送日志
-  SaveTotalConfig(totalNum,totalBuy,buyUnit,totalSell,sellUnit) 保存统计数据
-  PostData(postType,url,params,paramType) 发送带私钥的API
-  GetDataNoSign(url) 发送没有密钥的API
-  GetUserFund() 获取用户资金信息
-  TestMode() 测试模块，将自动发送非密钥API、带密钥API，测试通讯是否正常
-  GetMarket() 获取市场列表
-  BuyOrSell(entrustType,price) 进行一次交易
-  ClearEntrust() 清理当前交易对的所有委托（该方法官方API不可用）
-  CheckFinish() 检查订单完成情况，执行委托后请调用该方法（该方法部分官方API不可用，只确保输出任务结束信息、统计信息）
-  ClearEntrust(entrustId) 撤销指定订单
-  Run() 脚本主体
+    GetDateToFormat(date,format) 根据date时间获取特定结构的时间字符串
+    SendLog(message,isCore) 发送日志
+    SaveTotalConfig(totalNum,totalBuy,buyUnit,totalSell,sellUnit) 保存统计数据
+    PostData(postType,url,params,paramType) 发送带私钥的API
+    GetDataNoSign(url) 发送没有密钥的API
+    GetUserFund() 获取用户资金信息
+    TestMode() 测试模块，将自动发送非密钥API、带密钥API，测试通讯是否正常
+    GetMarket() 获取市场列表
+    BuyOrSell(entrustType,price) 进行一次交易
+    ClearEntrust() 清理当前交易对的所有委托（该方法官方API不可用）
+    CheckFinish() 检查订单完成情况，执行委托后请调用该方法（该方法部分官方API不可用，只确保输出任务结束信息、统计信息）
+    ClearEntrust(entrustId) 撤销指定订单
+    Run() 脚本主体
 
 # 常见问题
 
