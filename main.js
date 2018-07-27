@@ -35,6 +35,9 @@ let ConfigData = {
     // 例如：
     //      eth余额最初为100，经过几次脚本循环后变为111或89，则自动退出脚本
     'forceStopP': 0.1,
+    //自动撤销订单时间
+    // 单位：毫秒
+    'autoClearOrderTime': 3000
 };
 
 //读取配置文件
@@ -668,7 +671,7 @@ let Run = function(){
             //间隔500毫秒执行1次动作
             setTimeout(() => {
                 resolveFinish(true);
-            },3000);
+            },ConfigData.autoClearOrderTime);
         });
         promiseFinish.then(res => {
             if(!res){

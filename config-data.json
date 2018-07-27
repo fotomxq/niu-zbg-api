@@ -7,5 +7,6 @@
   "transactionsNumber": 0.5,
   "waitFinishTime": 20000,
   "showCoreLog": false,
-  "forceStopP": 0.1
+  "forceStopP": 0.1,
+  "autoClearOrderTime": 3000
 }
